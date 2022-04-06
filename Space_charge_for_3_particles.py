@@ -3,39 +3,27 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import scipy.constants as const
 
-Q = [-const.e, -const.e, -const.e, -const.e]  # 4 particles
-# Q = [-const.e, -const.e, -const.e]  # 3 particles
 
+Q = [-const.e, -const.e, -const.e]
 m = const.m_e
 k = 9 * 10**9
-N = 4
-tmax = 2.5
-dt = 0.05
+N = 3
+tmax = 7
+dt = 0.1
 
 def accel():
 
-    ''''''
-    # FOR 4 PARTICLES:
+    x = [-2, 0, 2]
+    y = [0, 0, 0]
+    z = [1, 1, 1]
 
-    x = [0, 2, 0, -2]
-    y = [2, 0, -2, 0]
-    z = [1, 1, 1, 1]
-    ''''''
-
-    ''''''
-    # FOR 3 PARTICLES:
-
-    # x = [-2, 0, 2]
-    # y = [0, 0, 0]
-    # z = [1, 1, 1]
-    ''''''
     ax, ay, az = [0] * N, [0] * N, [0] * N
 
     for i in range(N):
         for j in range(N):
             if i != j:
                 r = np.sqrt((x[i] - x[j])**2 + (y[i] - y[j])**2)
-                ax[i] += (k * Q[i] * Q[j]) * (x[i] - x[j])/(r**3 * m)
+                ax[i] += (k * Q[i] * Q[j]) * (x[i] - x[j]) / (r**3 * m)
                 ay[i] += (k * Q[i] * Q[j]) * (y[i] - y[j]) / (r**3 * m)
                 az[i] = 0
     return ax, ay, az
@@ -44,29 +32,12 @@ def accel():
 def pos_and_vel():
     t = 0
 
-    ''''''
-    # FOR 4 PARTICLES:
-
-    vx = [0, 0, 0, 0]
-    vy = [0, 0, 0, 0]
-    vz = [50, 50, 50, 50]
-    x = [0, 2, 0, -2]
-    y = [2, 0, -2, 0]
-    z = [1, 1, 1, 1]
-
-    ''''''
-
-    ''''''
-    # FOR 3 PARTICLES:
-
-    # x = [-2, 0, 2]
-    # y = [0, 0, 0]
-    # z = [1, 1, 1]
-    # vx = [0, 0, 0]
-    # vy = [0, 0, 0]
-    # vz = [0, 0, 0]
-
-    ''''''
+    x = [-2, 0, 2]
+    y = [0, 0, 0]
+    z = [1, 1, 1]
+    vx = [0, 0, 0]
+    vy = [0, 0, 0]
+    vz = [100, 100, 100]
 
     x_data = open(r'data/x_data.txt', 'w')
     y_data = open(r'data/y_data.txt', 'w')
@@ -154,9 +125,9 @@ def animating_data(skip = 1, dt = 0.05):
         ax.set_xlabel("x", fontsize = 16)
         ax.set_ylabel("y", fontsize = 16)
         ax.set_zlabel("z", fontsize = 16)
-        ax.set_xlim(-200, 200)
-        ax.set_ylim(-200, 200)
-        ax.set_zlim(0, 140)
+        ax.set_xlim(-2200, 2200)
+        ax.set_ylim(-2200, 2200)
+        ax.set_zlim(0, 800)
         ax.set_title("Space charge effect", fontweight = 'bold', fontsize = 16)
         plt.pause(0.000001)
     plt.show()
