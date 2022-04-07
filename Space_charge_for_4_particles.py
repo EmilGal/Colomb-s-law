@@ -23,10 +23,19 @@ def accel():
     for i in range(N):
         for j in range(N):
             if i != j:
-                r = np.sqrt((x[i] - x[j])**2 + (y[i] - y[j])**2)
-                ax[i] += (k * Q[i] * Q[j]) * (x[i] - x[j]) / (r**3 * m)
-                ay[i] += (k * Q[i] * Q[j]) * (y[i] - y[j]) / (r**3 * m)
-                az[i] = 0
+                FxC, FyC, FzC = [0] * N, [0] * N, [0] * N
+                r = np.sqrt((x[i] - x[j]) ** 2 + (y[i] - y[j]) ** 2)
+                FxC[i] += (k * Q[i] * Q[j]) * (x[i] - x[j]) / (r ** 3)
+                FyC[i] += (k * Q[i] * Q[j]) * (y[i] - y[j]) / (r ** 3)
+                FzC[i] += 0
+
+                ax[i] += FxC[i] / m
+                ay[i] += FyC[i] / m
+                az[i] += FzC[i] / m
+
+                # ax[i] += (k * Q[i] * Q[j]) * (x[i] - x[j]) / (r**3 * m)
+                # ay[i] += (k * Q[i] * Q[j]) * (y[i] - y[j]) / (r**3 * m)
+                # az[i] = 0
     return ax, ay, az
 
 
@@ -85,9 +94,9 @@ def pos_and_vel():
 
 
 def plot():
-    x = pd.read_csv(r'data/x_data.txt', header = None, sep = ' ')
-    y = pd.read_csv(r'data/y_data.txt', header = None, sep = ' ')
-    z = pd.read_csv(r'data/z_data.txt', header = None, sep = ' ')
+    x = pd.read_csv(r'data/x_data.txt', header = None, sep =' ')
+    y = pd.read_csv(r'data/y_data.txt', header = None, sep =' ')
+    z = pd.read_csv(r'data/z_data.txt', header = None, sep =' ')
 
     x = np.array(x)
     y = np.array(y)
